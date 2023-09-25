@@ -67,7 +67,7 @@ public class IndexModel : PageModel
 
         GraphServiceClient client = GetGraphClient();
 
-        var idlist = ids.Split('\n', ',');
+        var idlist = ids.Split('\n', ',', ';');
 
         var userIds = idlist.Select(i => i.Trim()).ToArray();
         string[] props = new string[] { "id", "mail", "accountEnabled", "givenName", "surname", "department", "jobTitle" };
