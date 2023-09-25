@@ -1,0 +1,47 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div>
+    <div class="columns">
+        <div class="col">
+            <h1>User Guids</h1>
+            <form method="post" >
+                <textarea asp-for="IdInput" rows="10" cols="50"></textarea><br />
+                <button type="submit">Lookup</button>
+            </form>
+        </div>
+        <div class="col">
+            <h1>Search</h1>
+            <form method="post" asp-page-handler="Search">
+                <input asp-for="SearchInput" /><br />
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+
+    @{
+        var ids = ViewData["UserIds"] as string[];
+
+        if (ids?.Any() == true)
+        {
+            var users = ViewData["Users"] as List<Microsoft.Graph.Models.User>;
+            <table>
+            @foreach(var id in ids)
+            {
+                var u = users.FirstOrDefault(u => u.Id == id.ToLowerInvariant());
+                <tr>
+                    <td>@id</td>
+                    <td>@(u?.Mail ?? (u == null ? "NOT FOUND" : ""))</td>
+                    <td>@(u?.GivenName) @(u?.Surname)</td>
+                    <td>@(u?.Department)</td>
+                    <td>@(u?.JobTitle)</td>
+                </tr>
+            }
+            </table>
+        }
+    }
+</>
