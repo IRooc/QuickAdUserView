@@ -29,7 +29,14 @@
         if (ids?.Any() == true)
         {
             var users = ViewData["Users"] as List<Microsoft.Graph.Models.User>;
-            <table>
+            <table id="usertable">
+                <tr>
+                    <th>id</th>
+                    <th>email</th>
+                    <th>name</th>
+                    <th>department</th>
+                    <th>jobtitle</th>
+            </tr>
             @foreach(var id in ids)
             {
                 var u = users.FirstOrDefault(u => u.Id == id.ToLowerInvariant());
@@ -42,6 +49,7 @@
                 </tr>
             }
             </table>
+            <a href="#" onclick="download_table_as_csv('usertable');">Download as CSV</a>
         }
     }
 </>
