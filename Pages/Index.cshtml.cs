@@ -76,7 +76,12 @@ public class IndexModel : PageModel
         List<Microsoft.Graph.Models.User> foundUsers = new List<Microsoft.Graph.Models.User>();
         while (i < userIds.Length)
         {
-            var expressions = userIds.Skip(i).Take(batchsize)
+			var hasEmail = ids.IndexOf("@") > 0;
+			
+            var expressions = hasEmail ? userIds.Skip(i).Take(batchsize)
+                                     .Where(i => i.IndexOf("@") > 0)
+                                     .Select(x => $"mail eq '{x}'") 
+									 : userIds.Skip(i).Take(batchsize)
                                      .Where(i => Guid.TryParse(i, out _))
                                      .Select(x => $"Id eq '{x}'");
 
