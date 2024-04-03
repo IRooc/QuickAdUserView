@@ -36,6 +36,7 @@
                     <th>name</th>
                     <th>department</th>
                     <th>jobtitle</th>
+                    <th>EmpId</th>
                     <th>AdId</th>
             </tr>
             @foreach(var id in ids)
@@ -47,6 +48,7 @@
                     <td>@(u?.GivenName) @(u?.Surname)</td>
                     <td>@(u?.Department)</td>
                     <td>@(u?.JobTitle)</td>
+                    <td>@(u?.EmployeeId)</td>
                     <td>@(u?.Id)</td>
                 </tr>
             }

@@ -37,7 +37,7 @@ public class IndexModel : PageModel
 
         GraphServiceClient client = GetGraphClient();
 
-        string[] props = new string[] { "id", "mail", "accountEnabled", "givenName", "surname", "department", "jobTitle" };
+        string[] props = new string[] { "id", "mail", "accountEnabled", "givenName", "surname", "department", "jobTitle", "EmployeeId" };
         var i = 0;
 
         List<Microsoft.Graph.Models.User> foundUsers = new List<Microsoft.Graph.Models.User>();
@@ -70,7 +70,7 @@ public class IndexModel : PageModel
         var idlist = ids.Split('\n', ',', ';').Where(l => !string.IsNullOrWhiteSpace(l));
 
         var userIds = idlist.Select(i => i.Trim()).ToArray();
-        string[] props = new string[] { "id", "mail", "accountEnabled", "givenName", "surname", "department", "jobTitle" };
+        string[] props = new string[] { "id", "mail", "accountEnabled", "givenName", "surname", "department", "jobTitle", "EmployeeId" };
         var i = 0;
         var batchsize = 15;
         List<Microsoft.Graph.Models.User> foundUsers = new List<Microsoft.Graph.Models.User>();
