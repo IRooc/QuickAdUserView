@@ -7,7 +7,7 @@
 <div>
     <div class="columns">
         <div class="col">
-            <h1>User Guids</h1>
+            <h1>User Guids/Emails/EmpId's</h1>
             <form method="post" >
                 <textarea asp-for="IdInput" rows="10" cols="50"></textarea><br />
                 <button type="submit">Lookup</button>
@@ -36,12 +36,13 @@
                     <th>name</th>
                     <th>department</th>
                     <th>jobtitle</th>
-                    <th>EmpId</th>
-                    <th>AdId</th>
+                    <th>empId</th>
+                    <th>enabled</th>
+                    <th>adId</th>
             </tr>
             @foreach(var id in ids)
             {
-                var u = users.FirstOrDefault(u => u.Id == id.ToLowerInvariant() || u.Mail?.ToLowerInvariant() == id.ToLowerInvariant());
+                var u = users.FirstOrDefault(u => u.Id == id.ToLowerInvariant() || u.Mail?.ToLowerInvariant() == id.ToLowerInvariant() || u.EmployeeId == id);
                 <tr>
                     <td>@id</td>
                     <td>@(u?.Mail ?? (u == null ? "NOT FOUND" : ""))</td>
@@ -49,6 +50,7 @@
                     <td>@(u?.Department)</td>
                     <td>@(u?.JobTitle)</td>
                     <td>@(u?.EmployeeId)</td>
+                    <td>@(u?.AccountEnabled)</td>
                     <td>@(u?.Id)</td>
                 </tr>
             }

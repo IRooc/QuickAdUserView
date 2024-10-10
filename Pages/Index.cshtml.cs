@@ -77,16 +77,16 @@ public class IndexModel : PageModel
         while (i < userIds.Length)
         {
 			var hasEmail = ids.IndexOf("@") > 0;
-			
-            var expressions = hasEmail ? userIds.Skip(i).Take(batchsize)
-                                     .Where(i => i.IndexOf("@") > 0)
-                                     .Select(x => $"mail eq '{x}'") 
-									 : userIds.Skip(i).Take(batchsize)
-                                     .Where(i => Guid.TryParse(i, out _))
-                                     .Select(x => $"Id eq '{x}'");
+
+            var expressions = userIds.Skip(i).Take(batchsize)
+                                     .Select(x =>
+                                         {
+                                            if (x.IndexOf("@") > -1) return  $"mail eq '{x}'";
+                                            else if (long.TryParse(x, out _)) return $"employeeId eq '{x}'";
+                                            return $"id eq '{x}'";
+                                         });
 
             var filter = string.Join(" or ", expressions);
-
             var users = await client.Users.GetAsync(config =>
             {
                 config.Headers.Add("ConsistencyLevel", "eventual");
